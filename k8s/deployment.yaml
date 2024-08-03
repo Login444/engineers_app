@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: engineer-team-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: engineer-team-service
+  template:
+    metadata:
+      labels:
+        app: engineer-team-service
+    spec:
+      containers:
+      - name: engineer-team-service
+        image: yourusername/engineer-team-service:latest
+        ports:
+        - containerPort: 8000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: engineer-team-service
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+    targetPort: 8000
+  selector:
+    app: engineer-team-service
